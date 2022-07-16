@@ -39,6 +39,7 @@ class TestFileGenerator(unittest.TestCase):
         self.assertTrue(type(self.gen.makeFileName()) == str)
 
     def test_createFile(self):
+        np.random.seed()
         filename = self.gen.makeFileName()
         filesize = self.gen.makeFileSize()
         self.assertTrue(type(filename) == str)
