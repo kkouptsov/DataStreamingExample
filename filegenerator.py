@@ -37,6 +37,10 @@ class FileGenerator:
     TIME_MIN = 1                 # 1 ms
     TIME_MAX = 10**3             # 1 s
 
+    # Some constants
+    BUFFER_SIZE = 512
+    DATA_TYPE = np.int16
+
     def __init__(self, **kw):
         self.start_time = time2ms(time.time())
         self.end_time = self.start_time + getArg(kw, 'duration', int, self.TIME_DURATION)
@@ -62,4 +66,19 @@ class FileGenerator:
         """ Generate a random file name
         """
         return os.path.join(self.outdir, str(time2ms(time.time())))
+
+    def createFile(self, filename, filesize):
+        """ Create a binary file and write 'filesize' random 'type' integers into it
+        """
+        ii = np.iinfo(self.DATA_TYPE)
+        max_chunk_size = self.BUFFER_SIZE
+        with open(os.path.join(self.outdir, filename), 'wb') as file:
+            while filesize > 0:
+                chunk_size = min(max_chunk_size, filesize)
+                data = np.random.randint(ii.min, ii.max, size = chunk_size, dtype = self.DATA_TYPE)
+                data_len = file.write(data)
+                filesize = filesize - data_len
+
+    def removeFile(self, filename):
+        os.remove(filename)
 
