@@ -1,4 +1,4 @@
-#### Problem statement
+## Problem statement
 
 1.  Set up two local Python servers.
 
@@ -11,7 +11,7 @@
     using Python's async io functionality, thereby effectively implementing
     data streaming from one server to the other.
 
-##### Starting the server and the client
+## Starting the server and the client
 
 ```
 % python server.py
@@ -29,7 +29,7 @@ The client creates a number of files in the `in` directory with some timeout, an
 
 The server listens for HTTP connections, gets the data via POST, and saves the file in the `out` directory.
 
-##### Run tests
+## Run tests
 
 ```
 % python tests.py
