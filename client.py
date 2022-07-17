@@ -10,10 +10,13 @@ SOURCE_DIRECTORY = 'in'
 
 def main():
     try:
-        infile = os.path.join(ROOT, SOURCE_DIRECTORY, 'aaa')
-        files= {'file': ('aaa', open(infile, 'rb'), 'application/octet-stream')}
-        response = requests.post('http://localhost:8081', files = files)
+        file_path = os.path.join(ROOT, SOURCE_DIRECTORY, 'aaa')
+        file_size = os.path.getsize(file_path)
+        files = {'file': open(file_path, 'rb')}
+        data = {'file_name' : 'aaa', 'file_size': file_size , 'counter' : 1}
+        response = requests.post('http://localhost:8081', files = files, data = data)
         print(response)
+
     except Exception as e:
         print("exception: ", e)
 
