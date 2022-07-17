@@ -2,9 +2,9 @@ import requests
 import os, time
 from filegenerator import FileGenerator, randomFromRange, time2ms
 
-"""
-Generates a file and once it is done sends the data over HTTP using POST
-"""
+#
+# Generates a file and then sends the data over HTTP using POST
+#
 
 HOST = '127.0.0.1'
 PORT = 8081
@@ -54,4 +54,5 @@ def main():
         print("exception: ", e)
 
 if __name__ == "__main__":
+    # TODO: use argv to specify directory for files, parameters for file generation etc.
     main()

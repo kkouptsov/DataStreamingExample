@@ -2,11 +2,11 @@ import os
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import cgi
 
-"""
-Listens for connection from clients and saves
-the data obtained from POST requests to a separate file
-in TARGET_DIRECTORY.
-"""
+#
+# Listens for connection from clients and saves
+# the data obtained from POST requests to a separate file
+# in TARGET_DIRECTORY.
+#
 
 HOST = '127.0.0.1'
 PORT = 8081
