@@ -15,6 +15,7 @@ SOURCE_DIRECTORY = 'in'
 
 fg = FileGenerator(target_dir = os.path.join(ROOT, SOURCE_DIRECTORY))
 
+FILE_COUNT = 100
 TIME_DURATION = 600          # 10 min
 TIME_MIN = 10**-3            # 1 ms
 TIME_MAX = 1                 # 1 s
@@ -51,12 +52,11 @@ async def createFile():
     return file_name
 
 async def main():
-    try:
-        file_name = createFile()
-        sendFile(file_name)
-
-    except Exception as e:
-        print("exception: ", e)
+    count = FILE_COUNT
+    while count > 0:
+        file_name = await createFile()
+        await sendFile(file_name)
+        count = count - 1
 
 if __name__ == "__main__":
     # TODO: use argv to specify directory for files, parameters for file generation etc.
