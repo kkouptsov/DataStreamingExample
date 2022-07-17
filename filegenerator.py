@@ -63,6 +63,6 @@ class FileGenerator:
                 data_len = file.write(data)
                 file_size = file_size - data_len
 
-    def removeFile(self, file_path):
-        # TODO: make safe, delete only from 'indir'
+    def removeFile(self, file_name):
+        file_path = os.path.join(self.source_dir, file_name)
         os.remove(file_path)
