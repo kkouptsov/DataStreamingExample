@@ -1,6 +1,5 @@
 import requests
-import os, time
-from filegenerator import FileGenerator, randomFromRange, time2ms
+from utils import randomFromRange
 
 #
 # Generates a file and then sends the data over HTTP using POST
