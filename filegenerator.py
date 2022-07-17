@@ -30,32 +30,15 @@ class FileGenerator:
 
     # Default parameters
     SOURCE_DIRECTORY = 'in'
-    FILE_COUNT = 100
     FILE_MIN_SIZE = 1024         # 1 KiB
     FILE_MAX_SIZE = 1024*1024    # 1 MiB
-    TIME_DURATION = 600*10**3    # 10 min
-    TIME_MIN = 1                 # 1 ms
-    TIME_MAX = 10**3             # 1 s
 
     # Some constants
     BUFFER_SIZE = 512
     DATA_TYPE = np.int16
 
-    def __init__(self, **kw):
-        self.start_time = time2ms(time.time())
-        self.end_time = self.start_time + getArg(kw, 'duration', int, self.TIME_DURATION)
-        self.next_time = self.start_time
-        self.count = self.FILE_COUNT
-        self.indir = os.path.abspath(getArg(kw, 'input_dir', str, self.SOURCE_DIRECTORY))
-
-    def getNextTime(self):
-        """ Calculate a random time interval between successive file creation.
-        Given that min and max times differ by a few orders of magnitude, it makes
-        sense to generate time intervals using a non-uniform distribution
-        """
-        now = time2ms(time.time())
-        if now > self.next_time:
-            return randomFromRange(self.TIME_MIN, math.min(self.TIME_MAX, self.end_time - now))
+    def __init__(self, **kwargs):
+        self.source_dir = getArg(kwargs, 'source_dir', str, self.SOURCE_DIRECTORY)
         
     def makeFileSize(self):
         """ Calculate a random file size

@@ -1,5 +1,6 @@
 import requests
-import os
+import os, time
+from filegenerator import FileGenerator, randomFromRange, time2ms
 
 """
 Generates a file and once it is done sends the data over HTTP using POST
@@ -12,6 +13,23 @@ SOURCE_DIRECTORY = 'in'
 
 fg = FileGenerator(source_dir = os.path.join(ROOT, SOURCE_DIRECTORY))
 
+
+TIME_DURATION = 600*10**3    # 10 min
+TIME_MIN = 1                 # 1 ms
+TIME_MAX = 10**3             # 1 s
+
+start_time = time2ms(time.time())
+end_time = start_time + TIME_DURATION
+next_time = start_time
+
+def getNextTime(self):
+    """ Calculate a random time interval between successive file creation.
+    Given that min and max times differ by a few orders of magnitude, it makes
+    sense to generate time intervals using a non-uniform distribution
+    """
+    now = time2ms(time.time())
+    if now > self.next_time:
+        return randomFromRange(self.TIME_MIN, math.min(self.TIME_MAX, self.end_time - now))
 
 def sendFile(file_name):
     file_path = os.path.join(ROOT, SOURCE_DIRECTORY, file_name)
