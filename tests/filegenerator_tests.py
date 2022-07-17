@@ -3,6 +3,9 @@ import unittest
 import numpy as np
 from filegenerator import FileGenerator, time2ms, getArg, randomFromRange
 
+ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+SOURCE_DIRECTORY = 'in'
+
 class TestFileGenerator(unittest.TestCase):
     def setUp(self):
         self.gen = FileGenerator()
@@ -40,11 +43,12 @@ class TestFileGenerator(unittest.TestCase):
 
     def test_createFile(self):
         np.random.seed()
-        filename = self.gen.makeFileName()
-        filesize = self.gen.makeFileSize()
-        self.assertTrue(type(filename) == str)
-        self.assertFalse(os.path.exists(filename))
-        file = self.gen.createFile(filename, filesize)
-        self.assertTrue(os.path.exists(filename))
-        self.gen.removeFile(filename)
-        self.assertFalse(os.path.exists(filename))
+        file_name = self.gen.makeFileName()
+        file_size = self.gen.makeFileSize()
+        file_path = os.path.join(ROOT, SOURCE_DIRECTORY, file_name)
+        self.assertTrue(type(file_name) == str)
+        self.assertFalse(os.path.exists(file_path))
+        self.gen.createFile(file_name, file_size)
+        self.assertTrue(os.path.exists(file_path))
+        self.gen.removeFile(file_name)
+        self.assertFalse(os.path.exists(file_path))
