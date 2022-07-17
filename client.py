@@ -30,7 +30,7 @@ def getNextTime():
         return randomFromRange(TIME_MIN, min(TIME_MAX, end_time - now))
     return now
 
-def sendFile(file_name):
+async def sendFile(file_name):
     file_path = os.path.join(ROOT, SOURCE_DIRECTORY, file_name)
     file_size = os.path.getsize(file_path)
     files = {'file': open(file_path, 'rb')}
@@ -38,13 +38,13 @@ def sendFile(file_name):
     response = requests.post('http://' + HOST + ':' + str(PORT), files = files, data = data)
     return response.ok
 
-def createFile():
+async def createFile():
     file_name = fg.makeFileName()
     file_size = fg.makeFileSize()
     fg.createFile(file_name, file_size)
     return file_name
 
-def main():
+async def main():
     try:
         file_name = createFile()
         sendFile(file_name)
@@ -54,4 +54,4 @@ def main():
 
 if __name__ == "__main__":
     # TODO: use argv to specify directory for files, parameters for file generation etc.
-    main()
+    asyncio.run(main())
