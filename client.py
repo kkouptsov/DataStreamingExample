@@ -21,14 +21,14 @@ start_time = time2ms(time.time())
 end_time = start_time + TIME_DURATION
 next_time = start_time
 
-def getNextTime(self):
+def getNextTime():
     """ Calculate a random time interval between successive file creation.
     Given that min and max times differ by a few orders of magnitude, it makes
     sense to generate time intervals using a non-uniform distribution
     """
-    now = time2ms(time.time())
-    if now > self.next_time:
-        return randomFromRange(self.TIME_MIN, math.min(self.TIME_MAX, self.end_time - now))
+    if now > next_time:
+        return randomFromRange(TIME_MIN, min(TIME_MAX, end_time - now))
+    return now
 
 def sendFile(file_name):
     file_path = os.path.join(ROOT, SOURCE_DIRECTORY, file_name)
