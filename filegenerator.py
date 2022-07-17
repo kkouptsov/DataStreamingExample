@@ -65,20 +65,21 @@ class FileGenerator:
     def makeFileName(self):
         """ Generate a random file name
         """
-        return os.path.join(self.indir, str(time2ms(time.time())))
+        return str(time2ms(time.time()))
 
-    def createFile(self, filepath, filesize):
+    def createFile(self, file_name, file_size):
         """ Create a binary file and write 'filesize' random 'type' integers into it
         """
+        file_path = os.path.join(self.source_dir, file_name)
         ii = np.iinfo(self.DATA_TYPE)
         max_chunk_size = self.BUFFER_SIZE
-        with open(filepath, 'wb') as file:
-            while filesize > 0:
-                chunk_size = min(max_chunk_size, filesize)
+        with open(file_path, 'wb') as file:
+            while file_size > 0:
+                chunk_size = min(max_chunk_size, file_size)
                 data = np.random.randint(ii.min, ii.max, size = chunk_size, dtype = self.DATA_TYPE)
                 data_len = file.write(data)
-                filesize = filesize - data_len
+                file_size = file_size - data_len
 
-    def removeFile(self, filepath):
+    def removeFile(self, file_path):
         # TODO: make safe, delete only from 'indir'
-        os.remove(filepath)
+        os.remove(file_path)
