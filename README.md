@@ -1,4 +1,4 @@
--   Problem
+-   Problem statement
 
 1.  Set up two local Python servers.
 
