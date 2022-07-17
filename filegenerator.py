@@ -14,7 +14,7 @@ class FileGenerator:
     DATA_TYPE = np.int16
 
     def __init__(self, **kwargs):
-        self.source_dir = getArg(kwargs, 'source_dir', str, self.SOURCE_DIRECTORY)
+        self.source_dir = getArg(kwargs, 'target_dir', str, self.SOURCE_DIRECTORY)
         
     def makeFileSize(self):
         """ Calculate a random file size

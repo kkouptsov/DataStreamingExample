@@ -10,7 +10,7 @@ PORT = 8081
 ROOT = os.path.dirname(os.path.realpath(__file__))
 SOURCE_DIRECTORY = 'in'
 
-fg = FileGenerator(source_dir = os.path.join(ROOT, SOURCE_DIRECTORY))
+fg = FileGenerator(target_dir = os.path.join(ROOT, SOURCE_DIRECTORY))
 
 
 TIME_DURATION = 600*10**3    # 10 min
