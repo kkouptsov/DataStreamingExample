@@ -29,7 +29,7 @@ def randomFromRange(min, max):
 class FileGenerator:
 
     # Default parameters
-    TARGET_DIRECTORY = 'in'
+    SOURCE_DIRECTORY = 'in'
     FILE_COUNT = 100
     FILE_MIN_SIZE = 1024         # 1 KiB
     FILE_MAX_SIZE = 1024*1024    # 1 MiB
@@ -46,7 +46,7 @@ class FileGenerator:
         self.end_time = self.start_time + getArg(kw, 'duration', int, self.TIME_DURATION)
         self.next_time = self.start_time
         self.count = self.FILE_COUNT
-        self.outdir = os.path.abspath(getArg(kw, 'input_dir', str, self.TARGET_DIRECTORY))
+        self.indir = os.path.abspath(getArg(kw, 'input_dir', str, self.SOURCE_DIRECTORY))
 
     def getNextTime(self):
         """ Calculate a random time interval between successive file creation.
@@ -65,20 +65,20 @@ class FileGenerator:
     def makeFileName(self):
         """ Generate a random file name
         """
-        return os.path.join(self.outdir, str(time2ms(time.time())))
+        return os.path.join(self.indir, str(time2ms(time.time())))
 
-    def createFile(self, filename, filesize):
+    def createFile(self, filepath, filesize):
         """ Create a binary file and write 'filesize' random 'type' integers into it
         """
         ii = np.iinfo(self.DATA_TYPE)
         max_chunk_size = self.BUFFER_SIZE
-        with open(os.path.join(self.outdir, filename), 'wb') as file:
+        with open(filepath, 'wb') as file:
             while filesize > 0:
                 chunk_size = min(max_chunk_size, filesize)
                 data = np.random.randint(ii.min, ii.max, size = chunk_size, dtype = self.DATA_TYPE)
                 data_len = file.write(data)
                 filesize = filesize - data_len
 
-    def removeFile(self, filename):
-        os.remove(filename)
-
+    def removeFile(self, filepath):
+        # TODO: make safe, delete only from 'indir'
+        os.remove(filepath)
