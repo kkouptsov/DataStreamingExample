@@ -1,7 +1,8 @@
 import os
 import unittest
 import numpy as np
-from filegenerator import FileGenerator, time2ms, getArg, randomFromRange
+from filegenerator import FileGenerator
+from utils import getArg, randomFromRange
 
 ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 SOURCE_DIRECTORY = 'in'
