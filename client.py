@@ -29,10 +29,12 @@ def getNextTime():
     Given that min and max times differ by a few orders of magnitude, it makes
     sense to generate time intervals using a non-uniform distribution
     """
+    global next_time
     now = time.time()
-    if now > next_time:
-        return randomFromRange(TIME_MIN, min(TIME_MAX, end_time - now))
-    return now
+    if now <= next_time:
+        return now
+    next_time = randomFromRange(TIME_MIN, min(TIME_MAX, end_time - now))
+    return next_time
 
 async def sendFile(file_name):
     file_path = os.path.join(ROOT, SOURCE_DIRECTORY, file_name)
